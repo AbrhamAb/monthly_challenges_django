@@ -16,11 +16,27 @@ challenges={
         "november":"Practice gratitude journaling.",
         "december":"Reflect on the year's achievements."
     }
+
+def index(request):
+    list_items=""
+    months=list(challenges.keys())
+
+    for month in months:
+        month_path=reverse("month-challenge",args=[month])
+        list_items+=f"<li><a href='{month_path}'>{month.capitalize()}</a></li>"
+    
+    response_data=f"<ul>{list_items}</ul>"
+    return HttpResponse(response_data)
+
 def monthly_challenge_by_number(request,month):
     months=list(challenges.keys())
-    redirect_month = months[month - 1]
-    redirect_path = reverse("month-challenge",args=[redirect_month])
-    return HttpResponseRedirect(redirect_path)
+
+    if month>len(months):
+        return HttpResponseNotFound("<h1> Invalid month </h1>")
+    else:
+        redirect_month = months[month - 1]
+        redirect_path = reverse("month-challenge",args=[redirect_month])
+        return HttpResponseRedirect(redirect_path)
 
 def monthly_challenge(request,month):
     try:
