@@ -1,4 +1,9 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
+{% load static %} <!-- to use static files like css -->
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'challenges/challenge.css' %}">
+{% endblock %}
 
 {% block page_title %}
     <title>{{month_name}} - Monthly Challenge</title>
